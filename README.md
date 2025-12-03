@@ -145,6 +145,8 @@ end note
 
 @enduml
 ```
+<img width="577" height="192" alt="TP11IaGn38RtEKMMYiuxW0iPw83CGYmAxaDREe5EChHvYuTugdU4Tp4hTY7exFBdv_i8sJUZQlEvG2ZK6lggSGx6Aiyab5F53q2y-rcd6rikwG6RLPPy2vymg2SjyIXPRUG3qrabZkHEn0BmLxtRFVv2_--7waexrAAMi78-6RXjZPmLAUYbKDG9NCSvT91AQXXKnlrjWdVMGe6tLV3jrT_ZY_EuuE7e9qWIyLiB-pxr_tm1" src="https://github.com/user-attachments/assets/86adaa77-a1b4-4b83-8367-8b0293ffd03d" />
+
 ### 📌 Después – Aplicación de patrones GoF
 ```csharp
 @startuml
@@ -187,3 +189,5 @@ ConsoleOutputAdapter --> IOutput
 
 @enduml
 ```
+<img width="623" height="574" alt="ZP7DIiGm4CVlUOeSTv6-G0-oKZzOKDQ3u7bCPsiWcPHa0YxYkvjj6gpD8ju2y_j_P6ON63n7QuH0YbO-UzT7nI-d4UMdaFB1cNvFW-FqljLW7VNfrRs39l4bX2P6VmI5SZyh3oDwOEreab_TVQ2AZ6ceC8JDzhBe7XGxVygIpYCmpfCDfoRjijQshRDMheV8O-JizkeruyQ6ePM1lQPXgg" src="https://github.com/user-attachments/assets/2e8d8b3c-51a8-47e7-8a18-081cb6eea0a7" />
+
