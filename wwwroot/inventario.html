@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gestión de Inventario</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+
+        <!-- Top App Bar -->
+        <div class="sticky top-0 z-10 bg-background-light dark:bg-background-dark pt-4">
+            <div class="flex items-center p-4 pb-2 justify-between">
+                <div class="text-white flex size-12 shrink-0 items-center justify-start">
+                    <span class="material-symbols-outlined text-3xl text-primary">
+                        inventory_2
+                    </span>
+                </div>
+                <h1 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                    Gestión de Inventario
+                </h1>
+                <div class="flex w-12 items-center justify-end">
+                    <button class="flex max-w-[480px] items-center justify-center rounded-lg h-12 bg-transparent text-white">
+                        <span class="material-symbols-outlined">
+                            notifications
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navegación principal -->
+            <nav class="flex gap-2 justify-center px-4 pt-1 pb-1">
+                <a href="index.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Dashboard
+                </a>
+
+                <a href="lingote.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Lingote Oro
+                </a>
+
+                <a href="diamante.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Diamantes
+                </a>
+
+                <!-- PÁGINA ACTUAL -->
+                <span class="px-3 py-1 rounded-full text-xs font-medium bg-primary text-background-dark">
+                    Inventario
+                </span>
+
+                <a href="usuarios.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Usuarios
+                </a>
+            </nav>
+
+            <!-- Search Bar -->
+            <div class="px-4 py-3">
+                <label class="flex flex-col min-w-40 h-12 w-full">
+                    <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                        <div class="text-primary/70 flex bg-primary/20 items-center justify-center pl-4 rounded-l-lg">
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                        </div>
+                        <input id="inventorySearch"
+                               class="form-input flex w-full min-w-0 flex-1 rounded-r-lg text-white focus:outline-0 focus:ring-0 border-none bg-primary/20 placeholder:text-primary/70 px-4 text-base font-normal leading-normal"
+                               placeholder="Buscar por ID, nombre o ubicación..." />
+                    </div>
+                </label>
+            </div>
+
+            <!-- Chips -->
+            <div class="flex gap-3 px-4 py-2 overflow-x-auto">
+                <button data-status="all"
+                        class="inventory-status-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-background-dark px-3 text-sm font-medium">
+                    Todos
+                </button>
+                <button data-status="in-stock"
+                        class="inventory-status-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-white">
+                    En stock
+                </button>
+                <button data-status="reserved"
+                        class="inventory-status-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-white">
+                    Reservado
+                </button>
+                <button data-status="hold"
+                        class="inventory-status-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-white">
+                    Quality Hold
+                </button>
+                <button data-status="low"
+                        class="inventory-status-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-white">
+                    Bajo stock
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap gap-4 p-4">
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-primary/20 p-4 border border-primary/30">
+                <p class="text-white/80 text-base font-medium leading-normal">Valor total inventario</p>
+                <p id="inventoryValue"
+                   class="text-primary tracking-light text-2xl font-bold leading-tight">$4,150,230</p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-primary/20 p-4 border border-primary/30">
+                <p class="text-white/80 text-base font-medium leading-normal">Items en hold</p>
+                <p id="inventoryHoldCount"
+                   class="text-primary tracking-light text-2xl font-bold leading-tight">12</p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-primary/20 p-4 border border-primary/30">
+                <p class="text-white/80 text-base font-medium leading-normal">Alertas bajo stock</p>
+                <p id="inventoryLowCount"
+                   class="text-primary tracking-light text-2xl font-bold leading-tight">5</p>
+            </div>
+        </div>
+
+        <!-- Inventory List -->
+        <div id="inventoryList" class="flex flex-col gap-px px-4 pb-24">
+            <!-- Item 1 -->
+            <div class="inventory-item flex gap-4 bg-background-light dark:bg-background-dark py-3 justify-between border-b border-primary/20"
+                 data-id="G-ING-001"
+                 data-name="Gold Ingot 24k"
+                 data-location="Vault 1"
+                 data-status="in-stock">
+                <div class="flex items-start gap-4">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
+                         style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUlXAwMfB9-A_8tU80r9i6T4DNCsNz73qd-85pULu22Vlbixg-F_P6ba9Ghw6WS3l839gv7QLNleZFiNLtUH2a7v4gEMa5pHeeUKn2IMm_vVnPsiVyAtMm3koSvdcI_DxihYeva6iB5pOplTmgsPeoTgAMRtEwxQFSH0bXHCkUeEyomINfbEaG12e90fMWTyUlYqOPV_wTwHu_5cV7Ve916fafd-VUKu17hla2RrecIJBVl387bBHduk7MC3RvB8MeLlqNJXTCybY-");'></div>
+                    <div class="flex flex-1 flex-col justify-center">
+                        <p class="text-white text-base font-medium leading-normal">
+                            G-ING-001 - Gold Ingot 24k
+                        </p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">Ubicación: Vault 1</p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">1000 g</p>
+                    </div>
+                </div>
+                <div class="shrink-0 flex items-center">
+                    <div class="flex items-center gap-2 rounded-full bg-green-500/20 px-3 py-1">
+                        <div class="size-2 rounded-full bg-green-500"></div>
+                        <p class="text-green-400 text-xs font-medium">En stock</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="inventory-item flex gap-4 bg-background-light dark:bg-background-dark py-3 justify-between border-b border-primary/20"
+                 data-id="D-LGD-078"
+                 data-name="Lab Diamond"
+                 data-location="Storage A"
+                 data-status="reserved">
+                <div class="flex items-start gap-4">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
+                         style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB-YjWo9D8fcQhC8PDQ7nDdSdzQUOkugOxvNdfzZ8Y8Wmhg9UxWfSt1KZdf1osqReF1yCDr1jzMmSsXplm2-WmCjW9mrGgzCtyqp364hwErMbLBpR--HOO6tF9zBwLktBrGhRQWLWv4Q4xMYPBmZeheHCTIpKTO0ODhJi-awuO1c8wgyiq27UyliksCNnH3UxnSxzB6yj4OxtBiXnkx1tjM6nMQ3JhewF8mAE9YVrCNLC8tF306ORTwIvlzFq-8NYdrNKUc6CLhEPpa");'></div>
+                    <div class="flex flex-1 flex-col justify-center">
+                        <p class="text-white text-base font-medium leading-normal">
+                            D-LGD-078 - Lab Diamond
+                        </p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">Ubicación: Storage A</p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">5.25 ct</p>
+                    </div>
+                </div>
+                <div class="shrink-0 flex items-center">
+                    <div class="flex items-center gap-2 rounded-full bg-yellow-500/20 px-3 py-1">
+                        <div class="size-2 rounded-full bg-yellow-500"></div>
+                        <p class="text-yellow-400 text-xs font-medium">Reservado</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="inventory-item flex gap-4 bg-background-light dark:bg-background-dark py-3 justify-between border-b border-primary/20"
+                 data-id="C-CHN-032"
+                 data-name="Silver Chain"
+                 data-location="Workshop"
+                 data-status="hold">
+                <div class="flex items-start gap-4">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
+                         style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCsRZLYBiwrvMLBEveDUoYj4Ov9ro09KpthXvDdyMNL3FfdVRosJwYl-9f36GpE4rape5L0X6GOl9LJnwZPntHWP91Io_QpD9IVNN06hGusgemOtGvN1_RU2HNtlt-8Uu20SSVtoca3dOl7LCnYvx-P2V0XMUNIRHT-tO8jRSj6Xfga8Ota6HN88viWZ01NHOY1YEaY3Mxfcj1DylGfCTSh6DeGm4cU3XCWKg47oECQd3NgZm5Hw1l3MNlWO3tEgiyYK3D4r-uPEJ6");'></div>
+                    <div class="flex flex-1 flex-col justify-center">
+                        <p class="text-white text-base font-medium leading-normal">
+                            C-CHN-032 - Silver Chain
+                        </p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">Ubicación: Workshop</p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">18 in</p>
+                    </div>
+                </div>
+                <div class="shrink-0 flex items-center">
+                    <div class="flex items-center gap-2 rounded-full bg-red-500/20 px-3 py-1">
+                        <div class="size-2 rounded-full bg-red-500"></div>
+                        <p class="text-red-400 text-xs font-medium">Quality Hold</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="inventory-item flex gap-4 bg-background-light dark:bg-background-dark py-3 justify-between border-b border-primary/20"
+                 data-id="D-SAP-004"
+                 data-name="Sapphire Gem"
+                 data-location="Vault 2"
+                 data-status="in-stock">
+                <div class="flex items-start gap-4">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
+                         style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnP-oIk-ooXT3p8eDIH1c_-7g7dKPm6tqdjrPyRiYvcBToHZJBPlHjRXwy6if-w06hKVf33qZopiAf2xLJiCTIbDlyA1i7RQ3YNKl0c2Czan01FG9pfxkAyr8usktS0nMkqb2VnXA2Y2vxX-Ji6YlVmOT_sImxOiQWEZgi4piy_ABkZwoDyvridJQM6n_whknJx6yW5S098coqt7T52zRhui2MnMe97hHZitNyXc9EHwTuo_UpSuZQ2pO_WIEnQyrBnY1OzvJs-Tun");'></div>
+                    <div class="flex flex-1 flex-col justify-center">
+                        <p class="text-white text-base font-medium leading-normal">
+                            D-SAP-004 - Sapphire Gem
+                        </p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">Ubicación: Vault 2</p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">10.5 ct</p>
+                    </div>
+                </div>
+                <div class="shrink-0 flex items-center">
+                    <div class="flex items-center gap-2 rounded-full bg-green-500/20 px-3 py-1">
+                        <div class="size-2 rounded-full bg-green-500"></div>
+                        <p class="text-green-400 text-xs font-medium">En stock</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="inventory-item flex gap-4 bg-background-light dark:bg-background-dark py-3 justify-between"
+                 data-id="G-ING-002"
+                 data-name="Gold Ingot 18k"
+                 data-location="Vault 1"
+                 data-status="low">
+                <div class="flex items-start gap-4">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px]"
+                         style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVLF2PjfJD1EPzEV3QnvDW2n4-6GcmADxlCPw13zgV6RzpZTlrPsTVpE-xE2DpqTEWILDGmCKIREN0mxsHfbYCxSANG8SEUF4jMZ7l80ynjyFozD4eX911MdAVVzaquTWaqjRH2vMwtOS-22tI5T8Y8_rU4GdiH22vfJ_o73ejkHf9APoMLEJuRa6C3XSCSBftgPhc4_6GJ8444BR3LVDWnm8Zmchh_zjFNoQt6eIdgW7tsJxMi0dt8F7MUtA92rBlFqFrCWOSb-GD");'></div>
+                    <div class="flex flex-1 flex-col justify-center">
+                        <p class="text-white text-base font-medium leading-normal">
+                            G-ING-002 - Gold Ingot 18k
+                        </p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">Ubicación: Vault 1</p>
+                        <p class="text-white/60 text-sm font-normal leading-normal">500 g</p>
+                    </div>
+                </div>
+                <div class="shrink-0 flex items-center">
+                    <div class="flex items-center gap-2 rounded-full bg-orange-500/20 px-3 py-1">
+                        <div class="size-2 rounded-full bg-orange-500"></div>
+                        <p class="text-orange-400 text-xs font-medium">Bajo stock</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registro de eventos -->
+        <div class="flex flex-col gap-4 p-4 pb-20">
+            <details class="group" open>
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Registro de Eventos
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div id="eventLogContainer"
+                     class="mt-4 h-48 max-h-48 overflow-y-auto rounded-xl bg-black/30 p-4 font-mono text-xs text-white/70 border border-white/10 space-y-2">
+                </div>
+            </details>
+        </div>
+
+        <!-- Floating Action Button -->
+        <div class="fixed bottom-6 right-6 z-20">
+            <button id="btnAddInventoryItem"
+                    class="flex size-14 items-center justify-center rounded-full bg-primary text-background-dark shadow-lg">
+                <span class="material-symbols-outlined text-3xl">
+                    add
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

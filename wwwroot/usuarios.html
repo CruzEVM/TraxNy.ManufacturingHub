@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gestión de Usuarios</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+
+        <!-- Top App Bar -->
+        <div class="sticky top-0 z-10 bg-background-light dark:bg-background-dark pt-4">
+            <div class="flex items-center p-4 pb-2 justify-between">
+                <div class="text-white flex size-12 shrink-0 items-center justify-start">
+                    <span class="material-symbols-outlined text-3xl text-primary">
+                        group
+                    </span>
+                </div>
+                <h1 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                    Gestión de Usuarios
+                </h1>
+                <div class="flex w-12 items-center justify-end">
+                    <button class="flex max-w-[480px] items-center justify-center rounded-lg h-12 bg-transparent text-white">
+                        <span class="material-symbols-outlined">
+                            person_add
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navegación principal -->
+            <nav class="flex gap-2 justify-center px-4 pt-1 pb-1">
+                <a href="index.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Dashboard
+                </a>
+
+                <a href="lingote.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Lingote Oro
+                </a>
+
+                <a href="diamante.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Diamantes
+                </a>
+
+                <a href="inventario.html"
+                   class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                    Inventario
+                </a>
+
+                <!-- PÁGINA ACTUAL -->
+                <span class="px-3 py-1 rounded-full text-xs font-medium bg-primary text-background-dark">
+                    Usuarios
+                </span>
+            </nav>
+
+            <!-- Search Bar -->
+            <div class="px-4 py-3">
+                <label class="flex flex-col min-w-40 h-12 w-full">
+                    <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                        <div class="text-primary/70 flex bg-primary/20 items-center justify-center pl-4 rounded-l-lg">
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                        </div>
+                        <input id="userSearch"
+                               class="form-input flex w-full min-w-0 flex-1 rounded-r-lg text-white focus:outline-0 focus:ring-0 border-none bg-primary/20 placeholder:text-primary/70 px-4 text-base font-normal leading-normal"
+                               placeholder="Buscar por nombre, rol o turno..." />
+                    </div>
+                </label>
+            </div>
+
+            <!-- Chips -->
+            <div class="flex gap-3 px-4 py-2 overflow-x-auto">
+                <button data-role="all"
+                        class="user-role-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-background-dark px-3 text-sm font-medium">
+                    Todos
+                </button>
+                <button data-role="supervisor"
+                        class="user-role-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-white">
+                    Supervisores
+                </button>
+                <button data-role="operator"
+                        class="user-role-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-white">
+                    Operadores
+                </button>
+                <button data-role="qc"
+                        class="user-role-chip flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 px-3 text-sm font-medium text-white">
+                    Calidad
+                </button>
+            </div>
+        </div>
+
+        <!-- Lista de usuarios -->
+        <div id="userList" class="flex flex-col gap-px px-4 pb-24">
+
+            <!-- Usuario 1 -->
+            <div class="user-item flex items-center justify-between py-3 border-b border-primary/20"
+                 data-name="Ana Torres"
+                 data-role="supervisor"
+                 data-status="active">
+                <div class="flex items-center gap-3">
+                    <div class="rounded-full bg-primary/20 size-10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">shield_person</span>
+                    </div>
+                    <div>
+                        <p class="text-white text-base font-medium leading-normal">
+                            Ana Torres
+                        </p>
+                        <p class="text-white/60 text-sm leading-tight">
+                            Supervisor Lingotes • Turno A
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center rounded-full bg-green-500/20 px-3 py-1 text-xs text-green-400">
+                        Activo
+                    </span>
+                    <button class="btn-toggle-role inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs text-white">
+                        <span class="material-symbols-outlined text-sm">swap_horiz</span>
+                        Rol
+                    </button>
+                </div>
+            </div>
+
+            <!-- Usuario 2 -->
+            <div class="user-item flex items-center justify-between py-3 border-b border-primary/20"
+                 data-name="Carlos Vega"
+                 data-role="operator"
+                 data-status="active">
+                <div class="flex items-center gap-3">
+                    <div class="rounded-full bg-primary/20 size-10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+                    </div>
+                    <div>
+                        <p class="text-white text-base font-medium leading-normal">
+                            Carlos Vega
+                        </p>
+                        <p class="text-white/60 text-sm leading-tight">
+                            Operador Reactor Diamantes • Turno B
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center rounded-full bg-green-500/20 px-3 py-1 text-xs text-green-400">
+                        Activo
+                    </span>
+                    <button class="btn-toggle-role inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs text-white">
+                        <span class="material-symbols-outlined text-sm">swap_horiz</span>
+                        Rol
+                    </button>
+                </div>
+            </div>
+
+            <!-- Usuario 3 -->
+            <div class="user-item flex items-center justify-between py-3 border-b border-primary/20"
+                 data-name="Laura Jiménez"
+                 data-role="qc"
+                 data-status="active">
+                <div class="flex items-center gap-3">
+                    <div class="rounded-full bg-primary/20 size-10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">science</span>
+                    </div>
+                    <div>
+                        <p class="text-white text-base font-medium leading-normal">
+                            Laura Jiménez
+                        </p>
+                        <p class="text-white/60 text-sm leading-tight">
+                            Analista Calidad • Joyas terminadas
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center rounded-full bg-green-500/20 px-3 py-1 text-xs text-green-400">
+                        Activo
+                    </span>
+                    <button class="btn-toggle-role inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs text-white">
+                        <span class="material-symbols-outlined text-sm">swap_horiz</span>
+                        Rol
+                    </button>
+                </div>
+            </div>
+
+            <!-- Usuario 4 (desactivado) -->
+            <div class="user-item flex items-center justify-between py-3"
+                 data-name="Miguel Ríos"
+                 data-role="operator"
+                 data-status="inactive">
+                <div class="flex items-center gap-3">
+                    <div class="rounded-full bg-primary/10 size-10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">person_off</span>
+                    </div>
+                    <div>
+                        <p class="text-white text-base font-medium leading-normal">
+                            Miguel Ríos
+                        </p>
+                        <p class="text-white/60 text-sm leading-tight">
+                            Operador Horno Cadenas • En entrenamiento
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center rounded-full bg-red-500/20 px-3 py-1 text-xs text-red-400">
+                        Inactivo
+                    </span>
+                    <button class="btn-toggle-active inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs text-white">
+                        <span class="material-symbols-outlined text-sm">power_settings_new</span>
+                        Activar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registro de eventos -->
+        <div class="flex flex-col gap-4 p-4 pb-20">
+            <details class="group" open>
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Registro de Eventos
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div id="eventLogContainer"
+                     class="mt-4 h-48 max-h-48 overflow-y-auto rounded-xl bg-black/30 p-4 font-mono text-xs text-white/70 border border-white/10 space-y-2">
+                </div>
+            </details>
+        </div>
+
+        <!-- FAB agregar usuario -->
+        <div class="fixed bottom-6 right-6 z-20">
+            <button id="btnAddUser"
+                    class="flex size-14 items-center justify-center rounded-full bg-primary text-background-dark shadow-lg">
+                <span class="material-symbols-outlined text-3xl">
+                    add
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Detalle Producción Lingote Oro</title>
+
+    <!-- Fuentes y Tailwind -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                        "accent-blue": "#007BFF",
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-col dark group/design-root overflow-x-hidden">
+        <!-- TopAppBar -->
+        <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+            <!-- Botón back que regresa al Dashboard -->
+            <a href="index.html"
+               class="text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+
+            <!-- Título se actualiza desde JS si quieres luego -->
+            <h1 id="tituloLingote"
+                class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                Lingote #B785-A
+            </h1>
+
+            <div class="size-12"></div>
+        </div>
+
+        <!-- Navegación principal -->
+        <nav class="flex gap-2 justify-center px-4 pt-1 pb-1">
+            <a href="index.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Dashboard
+            </a>
+
+            <!-- PÁGINA ACTUAL: Lingote Oro -->
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-primary text-background-dark">
+                Lingote Oro
+            </span>
+
+            <a href="diamante.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Diamantes
+            </a>
+
+            <a href="inventario.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Inventario
+            </a>
+
+            <a href="usuarios.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Usuarios
+            </a>
+        </nav>
+
+        <!-- HeaderImage (3D Model Viewer) -->
+        <div class="@container px-4">
+            <div class="@[480px]:py-3">
+                <div class="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden rounded-xl min-h-80"
+                     data-alt="Interactive 3D model of a gold ingot with thermal imaging overlay"
+                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBX8im-lWrd6tsXyWGFJhs5_zJ615p5CXEPc8lA5208rUFQFflio5LHdVvq8fmUihWxhY9cSrmdqYAJS7aWX3kHGLs0idvLr1Kxl4PFlkHR6rNn_cRTskJAgj4EXzxZKfRK-uXVzylSu0m5-Bu9mDAnY_jYxi1KJWhfLDF_SoyIrRMLoSUJ6qHA_adzH7w648FZVaHnY8hAuAdqjvzCFGQz6XPrFm18cCZVGXldbzFMKG89MAbJgtNB9V94GQ7IGoH9vjqmoKRNjpoT");'>
+                    <div class="p-4 bg-gradient-to-t from-black/60 to-transparent">
+                        <span id="estadoLingote"
+                              class="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary">
+                            <span class="size-2 rounded-full bg-primary animate-pulse"></span>
+                            Enfriamiento Activo
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap gap-4 p-4">
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">
+                    Pureza
+                </p>
+                <p id="purezaValue"
+                   class="text-primary tracking-light text-2xl font-bold leading-tight">
+                    999.9
+                </p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">
+                    Peso (g)
+                </p>
+                <p id="pesoValue"
+                   class="text-white tracking-light text-2xl font-bold leading-tight">
+                    1000.5
+                </p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">
+                    Temp. Molde (&deg;C)
+                </p>
+                <p id="tempMoldeValue"
+                   class="text-white tracking-light text-2xl font-bold leading-tight">
+                    1064
+                </p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">
+                    Lote #
+                </p>
+                <p id="loteValue"
+                   class="text-white tracking-light text-2xl font-bold leading-tight">
+                    B785-A
+                </p>
+            </div>
+        </div>
+
+        <!-- ProgressBar -->
+        <div class="flex flex-col gap-3 p-4">
+            <div class="flex gap-6 justify-between">
+                <p class="text-white text-base font-medium leading-normal">
+                    Progreso de Producción
+                </p>
+            </div>
+            <div class="rounded-full bg-white/10 h-2">
+                <div id="progressFill"
+                     class="h-2 rounded-full bg-accent-blue"
+                     style="width: 66%"></div>
+            </div>
+            <p class="text-white/60 text-sm font-normal leading-normal">
+                Etapa: Solidificado
+            </p>
+        </div>
+
+        <!-- ButtonGroup -->
+        <div class="flex justify-center">
+            <div class="flex flex-1 gap-3 max-w-[480px] flex-col items-stretch px-4 py-3">
+                <button id="btnAjustarPureza"
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-accent-blue text-white text-sm font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
+                    <span class="truncate">Ajustar Pureza</span>
+                </button>
+                <button id="btnForzarEnfriamiento"
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-white/10 text-white text-sm font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
+                    <span class="truncate">Forzar Enfriamiento</span>
+                </button>
+                <button id="btnMarcarQC"
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-white/10 text-white text-sm font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
+                    <span class="truncate">Marcar para QC</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Data Visualization Charts (imágenes estáticas) -->
+        <div class="flex flex-col gap-4 p-4">
+            <!-- Cooling Curve Chart -->
+            <details class="group" open>
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Curva de Enfriamiento
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div class="mt-4 rounded-xl bg-white/5 p-4 border border-white/10">
+                    <img alt="Line chart showing the cooling curve of the ingot, with temperature decreasing over time."
+                         class="w-full h-auto"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjlhxcVowwBECD5fAls_fpH12-tgK7sUQ7t7UnUURZepjRV7UEOad7MAof6DICZUxYyZ6P3B7m37oGVjejmhZ0SlkneTu3ZgA0ulGdyHw7rTTy1j_BA1SfXiNblGomwnoRs6Ism-zltBNioCI-zWyS2CzlwVzMTe4odXlMwtyeWNfexsMt8VXXN0indiy4ktPOPe3F5ndZqxE6jj55tnFAgTFySL7cmNp-_39DDv0IUBHfL0o_KCIJ8aZc2RChtTTD_ufTzUw0L9yh" />
+                </div>
+            </details>
+
+            <!-- Purity Stability Chart -->
+            <details class="group">
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Estabilidad de Pureza
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div class="mt-4 rounded-xl bg-white/5 p-4 border border-white/10">
+                    <img alt="Line chart showing the purity stability over the last few hours, maintaining a high level."
+                         class="w-full h-auto"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnmvQxlPxWLMw7CkKSXTi_9xoLBZQwDUZnjylvopMAEtVWxfDfNp7tmyZ8OfoPC6JjY5Rc06WJ9VWr2DvgNBaCYstsxXq2lGuGZl7KveBUJeJo8SwS2NEyrbzotRaj28QAW8RPCQlE1ZAKtPT1YgwJrm5m43VP8v9beSgqtOsqr7olfVg0bpR8FyIiA0w0EH-MqQw7ToP1yj079peJwwmbsIhKnMp6clH1mF4SMXRW0Lde2pYc7hCB33WrZ7rSjOQDY_UQyqAWNE6-" />
+                </div>
+            </details>
+        </div>
+
+        <!-- Console Log (llenado por JS) -->
+        <div class="flex flex-col gap-4 p-4 pb-8">
+            <details class="group" open>
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Registro de Eventos
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div id="eventLogContainer"
+                     class="mt-4 h-48 max-h-48 overflow-y-auto rounded-xl bg-black/30 p-4 font-mono text-xs text-white/70 border border-white/10 space-y-2">
+                    <!-- Aquí se insertan los eventos desde app.js -->
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <!-- Nuestro JS -->
+    <script src="app.js"></script>
+</body>
+</html>

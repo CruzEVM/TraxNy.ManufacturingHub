@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Detalle Producción Diamante</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "accent-blue": "#00BFFF"
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+            background-color: #121212;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-dark group/design-root overflow-x-hidden">
+
+        <!-- Top bar + back -->
+        <div class="flex items-center bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+            <a href="index.html"
+               class="text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+
+            <h1 id="tituloDiamante"
+                class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                Diamante #LDG-23C
+            </h1>
+
+            <div class="size-12"></div>
+        </div>
+
+        <!-- Navegación principal -->
+        <nav class="flex gap-2 justify-center px-4 pt-1 pb-1">
+            <a href="index.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Dashboard
+            </a>
+
+            <a href="lingote.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Lingote Oro
+            </a>
+
+            <!-- PÁGINA ACTUAL -->
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-primary text-background-dark">
+                Diamantes
+            </span>
+
+            <a href="inventario.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Inventario
+            </a>
+
+            <a href="usuarios.html"
+               class="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white hover:bg-black/40 transition-colors">
+                Usuarios
+            </a>
+        </nav>
+
+        <!-- Header imagen / reactor -->
+        <div class="@container px-4">
+            <div class="@[480px]:py-3">
+                <div class="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden rounded-xl min-h-80"
+                     data-alt="Interactive 3D model of a lab-grown diamond in its growth phase inside a reactor"
+                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCG8UocJqzGl0VTtcpAYF6sIdmDRpdn1XlkBK1me1ZeISKwqcHmPo0kEpSrquEdJtI5onYWAKwf3R9Ijp3IH3f1emOs3qmsY4uos-oULaMlfdDYN7cRvQGYXWtb25MSzZodUbcjFp8Jf2JNi4naPUQBIdUYykeF3pgFXHnI7MXLnmJxMKACVK_UlKGfelBiwBf5b7--TDuBkxHnFd2Sv27NHMRf5eNymXSbEsAT2wLBWaQU_flVUi0crnk4_mYPs3QJn3CeaL-3n6me");'>
+                    <div class="p-4 bg-gradient-to-t from-black/60 to-transparent">
+                        <span id="diamondPhaseTag"
+                              class="inline-flex items-center gap-2 rounded-full bg-accent-blue/20 px-3 py-1 text-sm font-medium text-accent-blue">
+                            <span class="size-2 rounded-full bg-accent-blue animate-pulse"></span>
+                            Fase de Crecimiento
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap gap-4 p-4">
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">Crecimiento (µm/h)</p>
+                <p id="diamondRateValue"
+                   class="text-accent-blue tracking-light text-2xl font-bold leading-tight">25.3</p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">Temp. Reactor (&deg;C)</p>
+                <p id="diamondTempValue"
+                   class="text-white tracking-light text-2xl font-bold leading-tight">1350</p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">Presión (GPa)</p>
+                <p id="diamondPressureValue"
+                   class="text-white tracking-light text-2xl font-bold leading-tight">5.8</p>
+            </div>
+            <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-4 bg-white/5 border border-white/10">
+                <p class="text-white/70 text-base font-medium leading-normal">Pureza</p>
+                <p id="diamondPurityValue"
+                   class="text-white tracking-light text-2xl font-bold leading-tight">Type IIa</p>
+            </div>
+        </div>
+
+        <!-- Progreso de cristalización -->
+        <div class="flex flex-col gap-3 p-4">
+            <div class="flex gap-6 justify-between">
+                <p class="text-white text-base font-medium leading-normal">
+                    Cristalización Estimada
+                </p>
+                <span id="diamondEtaLabel" class="text-white/60 text-sm">72h 15m</span>
+            </div>
+            <div class="rounded-full bg-white/10 h-2">
+                <div id="diamondProgressFill"
+                     class="h-2 rounded-full bg-accent-blue"
+                     style="width: 45%;"></div>
+            </div>
+            <p class="text-white/60 text-sm font-normal leading-normal">
+                Lote Actual: <span id="diamondBatchLabel">#LDG-23C</span>
+            </p>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-center">
+            <div class="flex flex-1 gap-3 max-w-[480px] flex-col items-stretch px-4 py-3">
+                <button id="btnDiamondParams"
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-accent-blue text-black text-sm font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
+                    <span class="truncate">Ajustar Parámetros</span>
+                </button>
+                <button id="btnDiamondTemplado"
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-white/10 text-white text-sm font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
+                    <span class="truncate">Iniciar Ciclo de Templado</span>
+                </button>
+                <button id="btnDiamondHarvest"
+                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-white/10 text-white text-sm font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
+                    <span class="truncate">Programar Cosecha</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Gráficas (estáticas) -->
+        <div class="flex flex-col gap-4 p-4">
+            <details class="group" open>
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Historial de Reactor
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div class="mt-4 rounded-xl bg-white/5 p-4 border border-white/10">
+                    <img alt="Line chart showing historical data for reactor temperature and pressure."
+                         class="w-full h-auto"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvuxFrWWVZeQCSidWE7l_6Hwdfj0EvdWf3apVNPkyLo4v3svWvY4Ms1ohm9M9HV2hJ8eta__iV04gBALnIRs2eOxGrHzMniEvgs13IsN3Ltz5DlY5SYm_ofcKY_oMfO5tZji2-5-979IioE6T1pbFjg3IDB5U7u8qIGDKUBKIKK83Dw0Su6ItuSVo_EDS3V8_nsjzdyt4tNFtM32S3F0v0zxQGP1MzEvCae5HrzD2222AxD9XPfZd4x3Aaf-f3mOy_hL4PK0gvdqaD" />
+                </div>
+            </details>
+
+            <details class="group">
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Estabilidad de Crecimiento
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div class="mt-4 rounded-xl bg-white/5 p-4 border border-white/10">
+                    <img alt="Line chart showing growth rate stability over time."
+                         class="w-full h-auto"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuALaXp2xkGCAIHM9Srg_f_oc13bZs_Yhs7o9SrQCLVPkEp_L2H0hLZCzzd0AcBSgQ5CYFhlV2ac1kjqw9FWr0qY58KDXewzpJSKEjmll-O5DLoDL0vQVAkxGt5XEL6xyqXVY12lD1PPpQ1M6WF4qhGqU_K5rt19ToPGHVpTqRJ0Fmc7c4mVQLFrlVLtIMM8tE_yHXTpy-a0Jvm4NIew5143JnBq6U200bnq6I9utbk8pQ_ev0Sw-YK8hqm9n2LfiTKPSFg1qSwdxmsW" />
+                </div>
+            </details>
+        </div>
+
+        <!-- Registro de eventos -->
+        <div class="flex flex-col gap-4 p-4 pb-8">
+            <details class="group" open>
+                <summary class="flex cursor-pointer list-none items-center justify-between text-white text-base font-medium leading-normal">
+                    Registro de Eventos
+                    <span class="transition-transform group-open:rotate-180">
+                        <span class="material-symbols-outlined text-white/70">expand_more</span>
+                    </span>
+                </summary>
+                <div id="eventLogContainer"
+                     class="mt-4 h-48 max-h-48 overflow-y-auto rounded-xl bg-black/30 p-4 font-mono text-xs text-white/70 border border-white/10 space-y-2">
+                    <!-- Se llena desde app.js -->
+                </div>
+            </details>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
